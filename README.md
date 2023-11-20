@@ -26,11 +26,9 @@ Covenant](https://img.shields.io/badge/ethics-Contributor%20Covenant-680171.svg)
 
 
 ## Metadata stories
-
 Because `Open Music Europe` and the Digital Music Observatory will use the [Polifonia Ontology Network](https://polifonia-project.github.io/ontology-network/) to describe data and the meaning (semantics) of music data, we harmonise our user stories with Polifonia's. However, Polifonia's stories are aimed to design a knowledge model and formal ontologies, not data management or collection applications.
 
 Polifonia stories: [github.com/polifonia-project/stories](https://github.com/polifonia-project/stories)
-
 
 ## Open Music Data stories
 Our stories are aiming to support our internal and external music data users. We are not fully aligning with the Polifonia story outlines, because we mainly develop R code, or software that can place R code in applications (in Shiny or other.)
