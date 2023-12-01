@@ -1,0 +1,36 @@
+---
+title: "Michal: Administrative Assistant in Policy Unit"
+subtitle: "Read in several hundred microdata files and consistently rename the variables from PDF codebooks"
+format: html
+editor: visual
+---
+
+## Michal: Administrative Assistant in Policy Unit
+
+This is a usability and requirement scenario for [Making Datasets Truly Interoperable in R](https://music.dataobservatory.eu/documents/open_music_europe/dataset-development/dataset-working-paper.html) --- source: [dataset-working-paper.qmd](https://github.com/dataobservatory-eu/dataset-development/stories/)
+
+**Persona:** Michal is a junior assistant at a policy unit and does the work nobody wants to do. Recently, he had to reconcile dozens of PDF variable descriptions with poorly formatted CSV files and create clean Excel tables. Michal wanted to know if an R script could do this.
+
+**Before:** Michal first sends the PDF documentation to ilovepdf.com and receives a Word file, which he then uploads to his company's DeepL Pro account. The original Slovak and English documentation is manually copied side-by-side into an Excel sheet. He manually renames every column in the files (several hundred files with several hundred columns each).
+
+```{r example-files}
+require(here)
+require(readxl)
+dir(here("data-raw", "KULT5"))
+```
+```{r example-codebook}
+readxl::read_excel(
+  here("data-raw", "KULT5",  "KULT5_example.xlsx")
+  )
+```
+
+
+**After**: After: The Excel and CSV microdata files are read in with the retroharmonize package, which has the functionality to handle microdata with retaining some of the metadata; the new functionality of the package helps them better organise their code lists in a way that is easy to be read into crosswalk tables (schemas), allowing to properly harmonise the surveys with correct variable names, variable labels, and consistent value labelling. The various identifiers are matched with suitable global identifiers for every observation.
+
+## Functional requirements
+
+1. A formal namespace or authority file is created from the identifiers of individual observational units. This enables Michal to see if the _New Kosice Orchestra_ has several name variations and immediately change those that are not valid (just typos.)
+2. Every observational unit receives a PID from VIAF, ISNI, or QID.
+3. The code lists are read into a crosswalk schema. This schema allows the uniform relabelling of the variables and the use of consistent value labels, both in Slovak and English.
+4. The waves of the same survey are joined into a single, integrated dataset with consistent variable names and labels.  
+5. A new functionality reads in the pre-published checksums and validates the newly created integrated dataset.
