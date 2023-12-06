@@ -1,0 +1,94 @@
+---
+title: "Natalia: IT specialist orking in a collective rights management"
+subtitle: "Entity matching"
+format: html
+editor: visual
+---
+
+Persona: Natalia, 45-years-old engineer working in a collective rights management organisation. She has extensive experience working with relational database management systems, but only vague familiarity with knowledge graphs.
+
+### **Goal**
+
+-   Entity matching, particularly connecting recordings (identified with ISRC) to musical works (ISWC).
+
+-   Matching the work with the author; establishing if the author needs to be paid locally by Natália\'s society, or the sister society abroad needs to be informed that the author of the work needs to be paid.
+
+-   Inform users of the work if playing the work counts into their local content requirements.
+
+### **Scenario**
+
+Before: Entity matching is a struggle when the user works with recordings and not with compositions (works), because Natália does not have an up-to-date dataset of works and their known recordings. If the recordings used cannot be immediately matched with works, a semi-automated process starts where title, performer, author matching hopefully connects the used recording to the work that it embeds.
+
+After: Entity matching should be a largely automated process; while a matching table may not be available for all work-recording pairs, using other mandatory metadata, such as title, names should allow the procedure to work with little human oversight.
+
+### **Data**
+
+The context of this story is that a fictional radio station, Radio Pelikan submitted a playlist of the songs they played (used) and Natália must make sure that the composer of the songs get paid. She also needs to ensure that other recordings of the same composition are easy to recognise in her database.
+
+Natália is concerned with two key rights management tasks: to match the entity submitted with a musical work; to look up the credited author(s) or rightsholders to the musical work; and to check if the credited author(s) have any connection to the society or country.
+
+-   The RP playlist contains In Hell.
+
+-   The global ISRC identifier of In Hell is USJ5G2022508.
+
+-   In Hell matches up with the global ISWC identifier T-933.149.532-0 \[for the abstract composition\]
+
+-   ISWC T-933.149.532-0 matches up with our local (agent ID) AB012345780.
+
+-   In Hell has a further known live recording that was commercially released.
+
+-   In Hell has lyrics.
+
+Copyrights a personal rights, and a the key aim of registering a musical work is to morally and ethically attribute the work to an author, and during the copyright protection term (during the life and 70 years after the death of the author) to identify who should receive royalties after each use of the work.
+
+The work register is identifying a work and connects it with the author(s). Natália has access to CIS-Net, the private global database of author\'s rights organisations. The CIS-Net database is synchronized with her database on a daily basis, so she finds the following data.
+
+-   ZAUNER MICHELLE CHONGMI is the author of the musical work In Hell (work).
+
+-   ZAUNER MICHELLE CHONGMI uses the stage name Michelle Zauner. \[Most of the data sources only use Michelle Zauner\].
+
+-   Michelle Zauner is the author of the lyrics of In Hell.
+
+-   In Hell is only credited to one author.
+
+-   Michelle Zauner does not live in our country, or Michelle Zauner lives in the United States.
+
+-   Michelle Zauner is not a member of our society.
+
+Does Natália\'s society need to pay Michelle Zauner for the use in Radio Pelikan? And does In Hell count into the local content quota defined by local law?
+
+-   In Hell has lyrics.
+
+-   In Hell (lyrics) is in English. \[does not count into the language quota\]
+
+-   All credited author(s all) live in the United States \[do not count into the residency quota\]
+
+-   No credited author of In Hell lives in our country
+
+-   USJ5G2022508 has a country code US \[does not count into the local production quota\]
+
+Playing In Hell does not count into the local quota and Natália\'s organisation does not need to pay Michelle Zauner directly; however, she has to make sure that their American sister society will pay her out in the United States. The radio play also did not count towards Radio Pelikan\'s local content requirement.
+
+*In Slovakia, cultural observational units are identified by name and ICO number. Unfortunately, units without legal personality do not have an ICO number.*
+
+## Functional requirements
+
+1.  The names of observational units from all surveys are summarised in a practical table; name variations can be separated easily and practically from spelling errors.
+2.  The non-trivially wrong names (institutional titles or headings) can be checked against the VIAF, ISNI, and QID authority files, which also mark valid and invalid name variations.
+3.  The integrated dataset uses one of the PIDs for observational unit identification.
+4.  A valid, temporary identifier is issued for observational units without VIAF, ISNI, QID, or ICO numbers, for example, based on a table that conforms to the CoolURIs definition in a hash HTML table form.
+5.  The unit of measure is added to all currency columns; currency units can be translated to EUR/NAC values. *The microdata files are organised by year, and the national currency unit is not stated explicitly, in the first years it is SKK then EUR.*
+6.  Metadata that is not explicit in the individual microdata files, for example, time, is made explicit. *The microdata files are organised by year, and the year or the date of collection or the reference period is not explicitly stated within the dataset.*
+7.  A script (in the Shiny app and outside) is utilising the forecast package to interpolate and extrapolate missing values, including forecasts and backcasts.
+8.  The Shiny App creates visualisation and table templates that are easy to copy into a Word document.
+
+## Statements
+
+1.  The *New Kosice Orchestra* and the *New Orchestra of Kosice* values can be analysed as one time series.
+2.  The *New Kosice Orchestra* / *New Orchestra of Kosice* has a machine-actionable PID.
+3.  Orchestras that are present in all 15 microdata files can be easily selected and their annual growth rate can be calculated, ranked, reported with ease.
+4.  The `Celkový počet premiér v tom diel slovenských autorov` has an English label version `Total number of premieres works of Slovak authors` in the dataset.
+5.  The `Celkový počet premiér v tom diel slovenských autorov` or `Total number of premieres works of Slovak authors` can be programatically referenced as `total_premiere_slovak_works`.
+6.  The `total_premiere_slovak_works` variable is always a numeric variable.
+7.  The `total_premiere_slovak_works` has no missing values, it is interpolated, backcasted or forecasted.
+8.  Because there are no missing data in the `total_premiere_slovak_works` for any observational unit, each observational unit (or its grouping) can be forecasted beyond the current timeframe of the integrated data file.
