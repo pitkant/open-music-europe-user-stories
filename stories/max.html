@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -62,8 +96,8 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="creating-reports-for-different-pros" class="level2">
 <h2 class="anchored" data-anchor-id="creating-reports-for-different-pros">Creating reports for different PROs</h2>
-<p>Persona: Max, a 45-year old music curator at an In-Store Music company, who is a DJ in his spare time. Max is responsible for acquiring the music from different sources such as webshops or from record labels directly. Max mostly only deals with the <span style="text-decoration:underline;">recording rights</span> side of things because he is in contact with a lot of record labels and artists who send him new music regularly. Usually the ISRC number is included in the metadata, sometimes not.</p>
-<p>The In-Store Music company needs to include the metadata from the <span style="text-decoration:underline;">music publishing rights</span> (composer, lyricist, music publisher) to fulfil reporting requirements to the music publishing PROs (performing rights organisation) such as GEMA, PRS, ASCAP.</p>
+<p>Persona: Max, a 45-year old music curator at an In-Store Music company, who is a DJ in his spare time. Max is responsible for acquiring the music from different sources such as web shops or from record labels directly. Max mostly only deals with the <span style="text-decoration:underline;">recording rights</span> side of things because he is in contact with a lot of record labels and artists who send him new music regularly. Usually the ISRC number is included in the metadata, sometimes not.</p>
+<p>The In-Store Music company needs to include the metadata from the <span style="text-decoration:underline;">music publishing rights</span> (composer, lyricist, music publisher) to fulfill reporting requirements to the music publishing PROs (performing rights organisation) such as GEMA, PRS, ASCAP.</p>
 <p>Max has no experience in researching the composer(s), lyricist(s) and music publisher(s) of a song. A manual search for these rights holders is complicated, and requires many different sources, e.g.&nbsp;from the PRO databases of GEMA, PRS, ASCAP etc.</p>
 <p>Introduction - Overview of two different music rights:</p>
 <table class="table">
@@ -128,7 +162,7 @@ ul.task-list li input[type="checkbox"] {
 <li>After: Entity matching should be a largely automated process. The ISWC number, the composer name(s) and the name of the music publisher(s) should be automatically written in the metadata dataset of each recording</li>
 </ul>
 <p><strong>Data:</strong></p>
-<p>The context of this story is that an In-Store Music provider wants to submit playlists with accurate metadata to PROs to make sure the composer(s) and music publisher(s) get paid for the public performance of their musical works in the In-Store Music domain. The In-Store Music provider uses an elaborated audio content management platform to manage the metadata of the music and to schedule the music into playlists for In-Store music usage. To date, the platform focused on the description of tracks from the musical perspective, while information about the artists who worked on it had only a marginal role. . The platform is already using external data sources (such as Discogs) to import metadata via API.</p>
+<p>The context of this story is that an In-Store Music provider wants to submit playlists with accurate metadata to PROs to make sure the composer(s) and music publisher(s) get paid for the public performance of their musical works in the In-Store Music domain. The In-Store Music provider uses an elaborated audio content management platform to manage the metadata of the music and to schedule the music into playlists for In-Store music usage. To date, the platform focused on the description of tracks from the musical perspective, while information about the artists who worked on it had only a marginal role. The platform is already using external data sources (such as Discogs) to import metadata via API.</p>
 <p>Via an API the recordings should be matched with a publicly available database to retrieve the metadata of composer(s) and music publisher(s). The metadata should be stored in the metadata dataset of each recording.</p>
 <p><strong>Example one:</strong></p>
 <ul>
@@ -217,6 +251,23 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+<p>Information about the track can be queried from MusicBrainz with the following query:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"http://musicbrainz.org/ws/2/recording?query=artist%3A%27The%20Beatles%27%20AND%20recording%3A%27All%20You%20Need%20Is%20Love%27"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>get_data <span class="ot">&lt;-</span> httr<span class="sc">::</span><span class="fu">GET</span>(url, httr<span class="sc">::</span><span class="fu">add_headers</span>(<span class="at">Accept =</span> <span class="st">"application/json"</span>, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">user-agent</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"R package"</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>content_data <span class="ot">&lt;-</span> httr<span class="sc">::</span><span class="fu">content</span>(get_data, <span class="at">type =</span> <span class="st">"application/json"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># There are several instances of the same recording so we take just one</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>one <span class="ot">&lt;-</span> content_data<span class="sc">$</span>recordings[[<span class="dv">1</span>]]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>isrc <span class="ot">&lt;-</span> <span class="fu">unlist</span>(one<span class="sc">$</span>isrcs)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(isrc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "GBAYE0900725"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ISWC not available in this data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Composer info not available in this data</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Music publisher info not available in this data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><strong>Example two:</strong></p>
 <p>The recording <em>One More Time</em> by <em>Daft Punk</em> is also lacking the name of the composer(s) and the name of the music publisher(s) existing metadata is the release title, label and release date ISRC number is available.</p>
 <p><em>Existing metadata</em></p>
@@ -289,6 +340,16 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># daft &lt;- new_query("recording", "isrc:GBDUW0000053")</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"http://musicbrainz.org/ws/2/recording?query=isrc%3AGBDUW0000053"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>get_data <span class="ot">&lt;-</span> httr<span class="sc">::</span><span class="fu">GET</span>(url, httr<span class="sc">::</span><span class="fu">add_headers</span>(<span class="at">Accept =</span> <span class="st">"application/json"</span>, </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">user-agent</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"R package"</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>daft <span class="ot">&lt;-</span> httr<span class="sc">::</span><span class="fu">content</span>(get_data, <span class="at">type =</span> <span class="st">"application/json"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>isrc <span class="ot">&lt;-</span> daft<span class="sc">$</span>recordings[[<span class="dv">1</span>]]<span class="sc">$</span>isrcs[<span class="dv">1</span>]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Composer info not available in this data</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Music publisher info not available in this data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 </section>
 
