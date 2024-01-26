@@ -1,0 +1,42 @@
+---
+title: "Ivana: Chief Analyst in Policy Unit"
+subtitle: "Analyse panel data, create forecasts, visualisations and easily check outstanding values"
+format: html
+editor: visual
+---
+
+## Ivana: Chief Analyst in Policy Unit
+
+This is a usability and requirement scenario for the further development and usability testing of the [retroharmonize](https://retroharmonize.dataobservatory.eu/) R package.
+
+
+Ivana is the chief analyst of a cultural policy unit. She uses the integrated microdata files created with retroharmonize to make utilisation and budget forecasts for concert halls based on panel data. She uses Excel, where time series projections could be more convenient to assemble.
+
+**Before**: Ivana must manually adjust the SKK value to Krones, and whenever she wants to do projects for a group of concert halls, for example, the fastest-growing audience halls, she needs to ensure that hall names are consistent across all the files. She manually checks outliers---she checks for data entry errors first, then tries to find information about concert halls on the internet if their values are outstanding.
+
+**After**:  Ivana receives the panel files that went through currency conversion from her assistant; the observational unit names, like all variable labels, have been normalised. With the help of global PID identifiers, she can utilise advanced searches on her government's open data portal and find annual reports of the outstanding concert halls with a few clicks. A Shiny app helps her to select from various forecasting methods for the selected observational units.
+
+_In Slovakia, cultural observational units are identified by name and ICO number. Unfortunately, units without legal personality do not have an ICO number._
+
+## Functional requirements
+
+1. The names of observational units from all surveys are summarised in a practical table; name variations can be separated easily and practically from spelling errors.
+2. The non-trivially wrong names (institutional titles or headings) can be checked against the VIAF, ISNI, and QID authority files, which also mark valid and invalid name variations.
+3. The integrated dataset uses one of the PIDs for observational unit identification.
+4. A valid, temporary identifier is issued for observational units without VIAF, ISNI, QID, or ICO numbers, for example, based on a table that conforms to the CoolURIs definition in a hash HTML table form.
+5. The unit of measure is added to all currency columns; currency units can be translated to EUR/NAC values. _The microdata files are organised by year, and the national currency unit is not stated explicitly, in the first years it is SKK then EUR._
+6. Metadata that is not explicit in the individual microdata files, for example, time, is made explicit. _The microdata files are organised by year, and the year or the date of collection or the reference period is not explicitly stated within the dataset._
+7. A script (in the Shiny app and outside) is utilising the forecast package to interpolate and extrapolate missing values, including forecasts and backcasts.
+8. The Shiny App creates visualisation and table templates that are easy to copy into a Word document.
+
+## Statements
+
+1. The _New Kosice Orchestra_ and the _New Orchestra of Kosice_ values can be analysed as one time series.
+2. The _New Kosice Orchestra_ / _New Orchestra of Kosice_ has a machine-actionable PID.
+3. Orchestras that are present in all 15 microdata files can be easily selected and their annual growth rate can be calculated, ranked, reported with ease.
+4. The `Celkový počet premiér v tom	diel slovenských autorov` has an English label version `Total number of premieres works of Slovak authors` in the dataset. 
+5. The `Celkový počet premiér v tom	diel slovenských autorov` or `Total number of premieres works of Slovak authors` can be programatically referenced as `total_premiere_slovak_works`. 
+6.  The `total_premiere_slovak_works` variable is always a numeric variable.
+7.  The `total_premiere_slovak_works` has no missing values, it is interpolated, backcasted or forecasted. 
+8. Because there are no missing data in the `total_premiere_slovak_works`  for any observational unit, each observational unit (or its grouping) can be forecasted beyond the current timeframe of the integrated data file.
+

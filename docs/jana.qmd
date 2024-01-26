@@ -1,0 +1,46 @@
+---
+title: "Jana: music librarian"
+subtitle: "Enriching the website's database"
+format: html
+editor: visual
+---
+
+Persona: Jana, a 42-years-old librarian working in a music information center. She is experienced in library metadata, such as Dublin Core, and working with relational database management systems, but not via queries or scripts, more using a graphical interface.
+
+### **Goal**
+
+Jana needs to regularly update the SQL database that is running behind the Music Information Center\'s website. She particularly has to make sure that domestic and foreign orchestra\'s, whenever they want to play classical music from her country, find a copy of music scores of the work they want to play. Moreover, music curators, music supervisors should find musical works that do not have a published score, but they are available in her organisations archive.
+
+### **Scenario**
+
+Before: Finding out if a musical work has any available music sheets (for purchase or rent) is a manual process. If it is already in the database, it is on the website. If not, Jana, if needed, queries manually the online catalogues of music libraries, the internal catalogue, and some known publishers of local classical music.
+
+After: Have a highly automated process or well-defined queries that can locate copies of music sheets in the country\'s music libraries, or in web stores, for each musical work that is in the public database of the information center.
+
+### **Data**
+
+A foreign music festival would like to play 20th century music and they are interested in the work of František Babušek. They find some information on the MIC website, but they cannot locate a usable score for Babušek\'s work of interest. Jana updates the website with the relevant information.
+
+-   František Babušek\'s [Concerto for Piano and Orchestra in D minor Op. 25](https://hc.sk/en/o-slovenskej-hudbe/osobnost-detail/991-babusek-frantisek/diela?timeLineItem-id=6892&do=timeLineItem-dieloDetail) has a published music score.
+
+-   Op. 25\'s music score can be found in the public music library of Košice for borrowing.
+
+-   Op. 25\'s music score is definitely out of print and it cannot be purchased (do not make efforts to find it.)
+
+Jana is working together with Natália, and they exchange data regularly. Using Natália\'s database, Jana updates the website on information where you can listen to Babušek\'s work.
+
+-   Op. 25 has two commercially released recordings for the public, ISRC SK9944321, and ISRC GB0144321.
+
+-   Playing Op. 25 on radio in our country counts towards the local content requirements \[the composer is born in our country; ISRC SK9944321 was produced and released in our country\]
+
+-   Op. 25 has a commercially not released recording in our archive that can only be listened to our premises under the inventory number HC012345678.
+
+-   You can listen to a recording of Op. 25 on Spotify on the https://open.spotify.com/track/abcdefghij.
+
+Does the local art council support bringing this not often heard work on stage?
+
+-   Playing Op. 25 is of interest for the local arts council, because Op. 25 was written by a composer born in our country.
+
+-   Playing a pre-existing recording ISRC SK9944321 before the show counts into the local content regulation (for radios in our country.
+
+-   Broadcasting such a performance counts towards the local content requirements.

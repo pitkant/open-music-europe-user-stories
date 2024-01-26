@@ -1,0 +1,69 @@
+---
+title: "Georg: DJ and Playlist Curator"
+subtitle: "Making playlists location-aware"
+format: html
+editor: visual
+---
+
+## Boutique Hotel Hamburg
+
+Persona: Georg, 40-year-old music curator, who mainly works with playlists on his computer. As a seasoned DJ, he is able to find music for every occasion, but due to GDPR constraints, making his playlist location-aware is becoming more and more difficult.
+
+**Goal:**
+
+A hotel group is building a new special boutique hotel in the city of Hamburg, Germany and also wants to represent the music that is playing there to give visitors an immediate feeling of the cultural aspect and what the music sounds like in the area they are currently staying in. The topic of having a "local" aspect is a big factor for clients nowadays so it's becoming more and more important to be able to adapt to such cases/requests with ease.
+
+The main goal is being able to have a sort of database and the always reliable information of "local" music at hand to immediately being able to tell and know where certain artists and their music is based/is coming from and also to be able to implement those local artists into the desired music profiles for the clients without having to look through the internet by hand all the time first.
+
+**Scenario:**
+
+-   Before: Manually researching and checking what kind of music and which artists, labels, songs, albums etc. are based and/or are being released in Hamburg or have a common topic revolving around Hamburg (lyrics, track title, album title etc.)
+
+-   After: The music curator accesses the in-store music company platform, navigates to the library and specifies a city/region in the search criteria. The system then returns all the relevant tracks that have one of the following criteria matching:
+
+    -   lyrics mention the requested city/region
+
+    -   artist is from the requested city/region
+
+    -   label is from the requested city/region
+
+    -   album/song title is from the requested city/region
+
+The music curator can go through the results further refining the criteria based on the client's briefing. Additionally, he can get inspired to acquire new music via standard web stores for the in-store music company based on artists and collabs
+
+Having reliable, updated and automatic metadata of artists, labels, songs etc. that are based in a certain city or area to easily fulfil such wishes of clients with more efficiency and especially with way less manual labour/research involved.\
+This would also create a foolproof method for such cases because manual research can also lead to easier mistakes all the time, whereas a reliable external data catalogue is usually always more accurate and the information is easier to interpret and to handle.
+
+**Data:**
+
+The data for being able to determine where what kind of music is coming from is being sourced from many different options. 
+
+The most important one in this case would be the country, or more specifically the city where the artist/the band is coming from and/or is based in. Another reliable source is being able to tell in which city a label is based, in this case the artist themselves don't necessarily have to be from the desired city if they release their music through a label coming from where the client wants to have music from. Another factor to consider would be the lyrics mentioning "Hamburg", either in the title itself or in the lyrics of the song.
+
+**Existing Metadata**:
+
+Title: All You Need Is Love
+
+Artist: The Beatles
+
+Release Title: Magical Mystery Tour
+
+Label: Apple Records
+
+Catalog Number: PPS 2111
+
+Release Country: Netherlands
+
+Release Date: 1967
+
+**New retrieved Metadata**:
+
+Production Country: England
+
+Production City: London
+
+Artist Home Country: England
+
+Artist Home Town: Liverpool
+
+(Due to GDPR constraints both city and country of composer(s) and lyricist(s) with their respective full names will not be considered.)

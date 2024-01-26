@@ -1,0 +1,128 @@
+---
+title: "Max"
+format: html
+editor: visual
+---
+
+## Creating reports for different PROs
+
+Persona: Max, a 45-year old music curator at an In-Store Music company, who is a DJ in his spare time. Max is responsible for acquiring the music from different sources such as web shops or from record labels directly. Max mostly only deals with the [recording rights]{style="text-decoration:underline;"} side of things because he is in contact with a lot of record labels and artists who send him new music regularly. Usually the ISRC number is included in the metadata, sometimes not.
+
+The In-Store Music company needs to include the metadata from the [music publishing rights]{style="text-decoration:underline;"} (composer, lyricist, music publisher) to fulfill reporting requirements to the music publishing PROs (performing rights organisation) such as GEMA, PRS, ASCAP.
+
+Max has no experience in researching the composer(s), lyricist(s) and music publisher(s) of a song. A manual search for these rights holders is complicated, and requires many different sources, e.g. from the PRO databases of GEMA, PRS, ASCAP etc.
+
+Introduction - Overview of two different music rights:
+
+| Sound Recording Copyright (so called “Recording Rights”)                          |
+|:-----------------------------------------------------------------------|
+| Musical Work Copyright incl. Composition & Lyrics (so called “Publishing Rights”) |
+| Originator                                                                        |
+| Artist                                                                            |
+| Composer                                                                          |
+| Represented by                                                                    |
+| Record Label                                                                      |
+| Music Publisher                                                                   |
+
+| or by Originator directly (then credited as “Copyright Control”) |
+|:-----------------------------------------------------------------|
+|                                                                  |
+| Identifier                                                       |
+| ISRC                                                             |
+| ISWC                                                             |
+
+This leads to incomplete data or contains errors.
+
+**Goal:** \* Entity matching, particularly connecting recordings (identified with ISRC, if not available with artist name and title) to musical works (ISWC). \* Include the metadata of the author(s) and music publisher(s) \* Inform PROs (e.g. GEMA, ASCAP) which musical works were played in In-Store Music playlists each including ISWC, title, artist, author(s) and music publisher(s)
+
+**Scenario:**
+
+-   Before: Acquiring wav files from different sources is leading to different metadata quality. In any case the recording title and the artist is provided. Mostly also record label name and ISRC number is available. For including music into In-Store Music playlists it would be crucial to have the full rights owner metadata available
+-   After: Entity matching should be a largely automated process. The ISWC number, the composer name(s) and the name of the music publisher(s) should be automatically written in the metadata dataset of each recording
+
+**Data:**
+
+The context of this story is that an In-Store Music provider wants to submit playlists with accurate metadata to PROs to make sure the composer(s) and music publisher(s) get paid for the public performance of their musical works in the In-Store Music domain. The In-Store Music provider uses an elaborated audio content management platform to manage the metadata of the music and to schedule the music into playlists for In-Store music usage. To date, the platform focused on the description of tracks from the musical perspective, while information about the artists who worked on it had only a marginal role. The platform is already using external data sources (such as Discogs) to import metadata via API.
+
+Via an API the recordings should be matched with a publicly available database to retrieve the metadata of composer(s) and music publisher(s). The metadata should be stored in the metadata dataset of each recording.
+
+**Example one:**
+
+-   The recording *All You Need Is Love* by *The Beatles* is stored in the platform but is lacking the name of the composer(s) and the name of the music publisher(s)
+-   existing metadata is the release title, label, catalogue number, release country and release date
+-   ISRC number is missing
+
+### Existing metadata
+
+| Key              | Value                |
+|:-----------------|:---------------------|
+| Title:           | All You Need Is Love |
+| Artist:          | The Beatles          |
+| Release Title:   | Magical Mystery Tour |
+| Label:           | Apple Records        |
+| Catalog Number:  | PPS 2111             |
+| Release Country: | Netherlands          |
+| Release Date:    | 1967                 |
+
+### New metadata
+
+| Key              | Value                                                                                  |
+|:-----------------------------------|:-----------------------------------|
+| ISRC:            | BAYE9901228                                                                            |
+| ISWC:            | T-010.433.964-1                                                                        |
+| Composer(s):     | John Winston Lennon, Paul James McCartney                                              |
+| *Composer(s):*   | *(1st Originator’s First Name Last Name, 2nd Originator’s First Name)*                 |
+| Music Publisher: | Sony-ATV Tunes LLC, Sony-ATV Tunes LLC                                                 |
+| *Composer(s):*   | *(1st Originator’s Name of Music Publisher, 2nd Originator’s Name of Music Publisher)* |
+
+Information about the track can be queried from MusicBrainz with the following query:
+
+```{r}
+url <- "http://musicbrainz.org/ws/2/recording?query=artist%3A%27The%20Beatles%27%20AND%20recording%3A%27All%20You%20Need%20Is%20Love%27"
+get_data <- httr::GET(url, httr::add_headers(Accept = "application/json", 
+    `user-agent` = "R package"))
+content_data <- httr::content(get_data, type = "application/json")
+# There are several instances of the same recording so we take just one
+one <- content_data$recordings[[1]]
+isrc <- unlist(one$isrcs)
+print(isrc)
+# ISWC not available in this data
+# Composer info not available in this data
+# Music publisher info not available in this data
+```
+
+**Example two:**
+
+The recording *One More Time* by *Daft Punk* is also lacking the name of the composer(s) and the name of the music publisher(s) existing metadata is the release title, label and release date ISRC number is available.
+
+*Existing metadata*
+
+| Key              | Value         |
+|:-----------------|:--------------|
+| Title:           | One More Time |
+| Artist:          | Daft Punk     |
+| Release Title:   | Discovery     |
+| Label:           | Virgin / EMI  |
+| Catalog Number:  | V2940         |
+| Release Country: | Europe        |
+| Release Date:    | 2001          |
+| ISRC No.:        | GBDUW0000053  |
+
+*New metadata*
+
+| Key              | Value                                                                                         |
+|:-----------------------------------|:-----------------------------------|
+| Composer(s):     | Thomas Bangaltar, Guillaume Emmanuel Paul De Homem Christ, Anthony Wayne Moore                |
+| Composer(s):     | (*1st Originator’s First Name Last Name, 2nd Originator’s First Name, 3rd Originator’s Name*) |
+| Music Publisher: | Daft Life Ltd., Daft Life Ltd, Tuff Tony                                                      |
+
+```{r}
+# daft <- new_query("recording", "isrc:GBDUW0000053")
+url <- "http://musicbrainz.org/ws/2/recording?query=isrc%3AGBDUW0000053"
+get_data <- httr::GET(url, httr::add_headers(Accept = "application/json", 
+    `user-agent` = "R package"))
+daft <- httr::content(get_data, type = "application/json")
+isrc <- daft$recordings[[1]]$isrcs[1]
+# Composer info not available in this data
+# Music publisher info not available in this data
+```

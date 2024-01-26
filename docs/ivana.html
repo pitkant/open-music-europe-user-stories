@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Ivana: Chief Analyst in Policy Unit</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="ivana_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ivana_files/libs/quarto-html/quarto.js"></script>
+<script src="ivana_files/libs/quarto-html/popper.min.js"></script>
+<script src="ivana_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ivana_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ivana_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ivana_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ivana_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ivana_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ivana_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Ivana: Chief Analyst in Policy Unit</h1>
+<p class="subtitle lead">Analyse panel data, create forecasts, visualisations and easily check outstanding values</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="ivana-chief-analyst-in-policy-unit" class="level2">
+<h2 class="anchored" data-anchor-id="ivana-chief-analyst-in-policy-unit">Ivana: Chief Analyst in Policy Unit</h2>
+<p>This is a usability and requirement scenario for the further development and usability testing of the <a href="https://retroharmonize.dataobservatory.eu/">retroharmonize</a> R package.</p>
+<p>Ivana is the chief analyst of a cultural policy unit. She uses the integrated microdata files created with retroharmonize to make utilisation and budget forecasts for concert halls based on panel data. She uses Excel, where time series projections could be more convenient to assemble.</p>
+<p><strong>Before</strong>: Ivana must manually adjust the SKK value to Krones, and whenever she wants to do projects for a group of concert halls, for example, the fastest-growing audience halls, she needs to ensure that hall names are consistent across all the files. She manually checks outliers—she checks for data entry errors first, then tries to find information about concert halls on the internet if their values are outstanding.</p>
+<p><strong>After</strong>: Ivana receives the panel files that went through currency conversion from her assistant; the observational unit names, like all variable labels, have been normalised. With the help of global PID identifiers, she can utilise advanced searches on her government’s open data portal and find annual reports of the outstanding concert halls with a few clicks. A Shiny app helps her to select from various forecasting methods for the selected observational units.</p>
+<p><em>In Slovakia, cultural observational units are identified by name and ICO number. Unfortunately, units without legal personality do not have an ICO number.</em></p>
+</section>
+<section id="functional-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="functional-requirements">Functional requirements</h2>
+<ol type="1">
+<li>The names of observational units from all surveys are summarised in a practical table; name variations can be separated easily and practically from spelling errors.</li>
+<li>The non-trivially wrong names (institutional titles or headings) can be checked against the VIAF, ISNI, and QID authority files, which also mark valid and invalid name variations.</li>
+<li>The integrated dataset uses one of the PIDs for observational unit identification.</li>
+<li>A valid, temporary identifier is issued for observational units without VIAF, ISNI, QID, or ICO numbers, for example, based on a table that conforms to the CoolURIs definition in a hash HTML table form.</li>
+<li>The unit of measure is added to all currency columns; currency units can be translated to EUR/NAC values. <em>The microdata files are organised by year, and the national currency unit is not stated explicitly, in the first years it is SKK then EUR.</em></li>
+<li>Metadata that is not explicit in the individual microdata files, for example, time, is made explicit. <em>The microdata files are organised by year, and the year or the date of collection or the reference period is not explicitly stated within the dataset.</em></li>
+<li>A script (in the Shiny app and outside) is utilising the forecast package to interpolate and extrapolate missing values, including forecasts and backcasts.</li>
+<li>The Shiny App creates visualisation and table templates that are easy to copy into a Word document.</li>
+</ol>
+</section>
+<section id="statements" class="level2">
+<h2 class="anchored" data-anchor-id="statements">Statements</h2>
+<ol type="1">
+<li>The <em>New Kosice Orchestra</em> and the <em>New Orchestra of Kosice</em> values can be analysed as one time series.</li>
+<li>The <em>New Kosice Orchestra</em> / <em>New Orchestra of Kosice</em> has a machine-actionable PID.</li>
+<li>Orchestras that are present in all 15 microdata files can be easily selected and their annual growth rate can be calculated, ranked, reported with ease.</li>
+<li>The <code>Celkový počet premiér v tom diel slovenských autorov</code> has an English label version <code>Total number of premieres works of Slovak authors</code> in the dataset.</li>
+<li>The <code>Celkový počet premiér v tom diel slovenských autorov</code> or <code>Total number of premieres works of Slovak authors</code> can be programatically referenced as <code>total_premiere_slovak_works</code>.</li>
+<li>The <code>total_premiere_slovak_works</code> variable is always a numeric variable.</li>
+<li>The <code>total_premiere_slovak_works</code> has no missing values, it is interpolated, backcasted or forecasted.</li>
+<li>Because there are no missing data in the <code>total_premiere_slovak_works</code> for any observational unit, each observational unit (or its grouping) can be forecasted beyond the current timeframe of the integrated data file.</li>
+</ol>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
