@@ -77,7 +77,7 @@ Via an API the recordings should be matched with a publicly available database t
 
 Information about the track can be queried from MusicBrainz with the following query:
 
-```{r}    
+```{r}
 url <- "http://musicbrainz.org/ws/2/recording?query=artist%3A%27The%20Beatles%27%20AND%20recording%3A%27All%20You%20Need%20Is%20Love%27"
 get_data <- httr::GET(url, httr::add_headers(Accept = "application/json", 
     `user-agent` = "R package"))

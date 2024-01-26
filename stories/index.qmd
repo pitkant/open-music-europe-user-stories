@@ -1,0 +1,19 @@
+## Metadata stories
+Because `Open Music Europe` and the Digital Music Observatory will use the [Polifonia Ontology Network](https://polifonia-project.github.io/ontology-network/) to describe data and the meaning (semantics) of music data, we harmonise our user stories with Polifonia's. However, Polifonia's stories are aimed to design a knowledge model and formal ontologies, not data management or collection applications.
+
+Polifonia stories: [github.com/polifonia-project/stories](https://github.com/polifonia-project/stories)
+
+## Open Music Data stories
+Our stories are aiming to support our internal and external music data users. We are not fully aligning with the Polifonia story outlines, because we mainly develop R code, or software that can place R code in applications (in Shiny or other.)
+
+- Rebeca, intermediate R user, able to use the _eurostat_ package and _tidyverse_, wants to become FAIR compliant: [eurostat-user1.html](eurostat-user1.html) -- source [eurostat-user1.qmd](eurostat-user1.qmd)
+- Ahmed, advanced R user, research data engineer wants to retain the data, add his new variables, and place them into a Data Catalogue: 
+[eurostat-user2.html](eurostat-user2.html) -- source [stories/eurostat-user2.qmd](eurostat-user2.qmd)
+- Michal, who have not used yet R, a junior assistant at a policy unit and does the work nobody wants to do. Recently, he had to reconcile dozens of PDF variable descriptions with poorly formatted CSV files and create clean Excel tables. Michal wanted to know if an R script could do this:
+[michal.html](michal.html) -- source [michal.qmd](michal.qmd)
+- Ivana is the chief analyst of a cultural policy unit. She uses the integrated microdata files created with retroharmonize to make utilisation and budget forecasts for concert halls based on panel data. She uses Excel, where time series projections could be more convenient to assemble. [ivana.html](ivana.html) -- source [ivana.qmd](https://github.com/dataobservatory-eu/dataset-development/stories/)
+- Natália is a 45-years-old engineer working in a collective rights management organisation. She has extensive experience working with relational database management systems, but only vague familiarity with knowledge graphs. [natalia.html](natalia.html) -- source [natalia.qmd](natalia.qmd)
+- Persona: Jana, a 42-years-old librarian working in a music information center. She is experienced in library metadata, such as Dublin Core, and working with relational database management systems, but not via queries or scripts, more using a graphical interface.
+[jana.html](jana.html) -- source [jana.qmd](jena.qmd)
+- Persona: Georg, 40-year-old music curator, who mainly works with playlists on his computer. As a seasoned DJ, he is able to find music for every occasion, but due to GDPR constraints, making his playlist location-aware is becoming more and more difficult. [georg.html](georg.html) -- source [georg.qmd](georg.qmd)
+- Persona: Max, a 45-year old music curator at an In-Store Music company, who is a DJ in his spare time. Max is responsible for acquiring the music from different sources such as webshops or from record labels directly. [max.html](max.html) -- source [max.qmd](max.qmd)
